@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>connections</key>
+	<dict>
+		<key>C3478950-21C6-4D39-93AA-33ADCED46F3D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>994C55BC-A39D-4096-9C64-C6F1A7B333BB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>River</string>
+	<key>description</key>
+	<string>Quickly test whether an API token is valid</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>LLM Key Test</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+echo -n $query
+
+# 发送HTTP请求
+response=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $query" \
+  -d '{
+    "model": "gpt-3.5-turbo",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }')
+
+# 判断HTTP状态码
+if [ $response -eq 200 ]; then
+  title="Request Successful"
+  subtitle="HTTP Status Code: $response"
+  arg="Success"
+else
+  title="Request Failed"
+  subtitle="HTTP Status Code: $response"
+  arg="Failure"
+fi
+
+# 输出结果
+cat &lt;&lt; EOB
+{"items": [
+  {
+    "title": "$title",
+    "subtitle": "$subtitle",
+    "arg": "$arg"
+  }
+]}
+EOB</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>994C55BC-A39D-4096-9C64-C6F1A7B333BB</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>openai</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading OpenAI Response</string>
+				<key>script</key>
+				<string># 发送HTTP请求
+response=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $1" \
+  -d '{
+    "model": "gpt-3.5-turbo",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }')
+
+# 判断HTTP状态码
+if [ $response -eq 200 ]; then
+  title="Request Successful"
+  subtitle="HTTP Status Code: $response"
+  arg="Success"
+else
+  title="Request Failed"
+  subtitle="HTTP Status Code: $response"
+  arg="Failure"
+fi
+
+# 输出结果
+cat &lt;&lt; EOB
+{"items": [
+  {
+    "title": "$title",
+    "subtitle": "$subtitle",
+    "arg": "$arg"
+  }
+]}
+EOB
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>sk-xxx</string>
+				<key>title</key>
+				<string>OpenAI Key</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>C3478950-21C6-4D39-93AA-33ADCED46F3D</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Alfred 5 workflow: Quickly test whether an API token is valid</string>
+	<key>uidata</key>
+	<dict>
+		<key>994C55BC-A39D-4096-9C64-C6F1A7B333BB</key>
+		<dict>
+			<key>xpos</key>
+			<integer>440</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+		<key>C3478950-21C6-4D39-93AA-33ADCED46F3D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>200</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>0.0.1</string>
+	<key>webaddress</key>
+	<string>https://github.com/Leizhenpeng/alfred-llm-api-check-workflow</string>
+</dict>
+</plist>
