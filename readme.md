@@ -1,6 +1,7 @@
 # alfred-ip-address-workflow
 
-![Screenshot](https://pic.forkway.cn/cdn/202309201453695.png)
+![image](https://github.com/Leizhenpeng/alfred-workflow-llm-token-check/assets/50035229/5cd7d419-54c4-4b44-873b-a9d07c313a2e)
+
 
 An [Alfred 5](https://www.alfredapp.com/) workflow: Quickly test whether an API token is valid
 
